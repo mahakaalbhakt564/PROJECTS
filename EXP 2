@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Responsive Banking UI</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f2f5f9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .banking-app {
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      width: 90%;
+      max-width: 400px;
+    }
+
+    .balance {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+    }
+
+    button {
+      flex: 1;
+      padding: 15px;
+      font-size: 1rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    .deposit-btn {
+      background: #4caf50;
+      color: #fff;
+    }
+
+    .withdraw-btn {
+      background: #f44336;
+      color: #fff;
+    }
+
+    button:hover {
+      opacity: 0.9;
+    }
+
+    @media (max-width: 400px) {
+      .buttons {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="banking-app">
+    <div class="balance">Balance: $<span id="balance">0.00</span></div>
+    <div class="buttons">
+      <button class="deposit-btn" onclick="handleTransaction('deposit')">Deposit</button>
+      <button class="withdraw-btn" onclick="handleTransaction('withdraw')">Withdraw</button>
+    </div>
+  </div>
+
+  <script>
+    let balance = 0.00;
+
+    function handleTransaction(type) {
+      const input = prompt(`Enter amount to ${type}:`);
+      const amount = parseFloat(input);
+
+      if (isNaN(amount) || amount <= 0) {
+        alert("Please enter a valid positive number.");
+        return;
+      }
+
+      if (type === 'withdraw' && amount > balance) {
+        alert("Insufficient funds.");
+        return;
+      }
+
+      if (type === 'deposit') {
+        balance += amount;
+      } else if (type === 'withdraw') {
+        balance -= amount;
+      }
+
+      document.getElementById('balance').textContent = balance.toFixed(2);
+    }
+  </script>
+</body>
+</html>
